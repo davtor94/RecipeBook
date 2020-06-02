@@ -24,6 +24,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -119,6 +120,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "recipie-book"
+    }
+  },
+  "defaultProject": "recipie-book",
+  "cli": {
+    "analytics": "a8029e46-8e96-4812-af8a-b9065352d9d4"
+  }
 }
