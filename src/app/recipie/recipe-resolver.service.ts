@@ -6,7 +6,11 @@ import { RecipeService } from './recipe.service';
 
 @Injectable({providedIn: 'root'})
 export class RecipeResolverService implements Resolve<Recipe[]>{
-constructor(private datService : DataStorageService, private recipeService : RecipeService){}
+constructor(
+    private datService : DataStorageService, 
+    private recipeService : RecipeService
+    ){}
+    
 resolve(route: ActivatedRouteSnapshot, state : RouterStateSnapshot){
     const recipies = this.recipeService.getRecipies();
     if(recipies.length === 0){
