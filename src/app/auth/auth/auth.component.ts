@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService , AuthResponseData} from './auth.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,10 +9,13 @@ import { Router } from '@angular/router';
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.css']
 })
-export class AuthComponent implements OnInit {
-  isLogin = false;
+export class AuthComponent implements OnInit, OnDestroy{
+  isLogin = true;
   isLoading = false;
   errorMsg : string = null;
+  // @ViewChild(PlaceholderDirective, { static: false }) alertHost: PlaceholderDirective;
+  private closeSub: Subscription;
+  
   constructor(private authService: AuthService, private router:Router) { }
 
   ngOnInit(): void {
@@ -29,6 +32,7 @@ export class AuthComponent implements OnInit {
     const password = authForm.value.password;
     let authObs :Observable<AuthResponseData>;
     this.isLoading = true;
+    
     if(this.isLogin){
       authObs = this.authService.logIn(email,password);
     }else{
@@ -43,4 +47,13 @@ export class AuthComponent implements OnInit {
       this.isLoading = false;
     });
   }
+  onHandleError() {
+    this.errorMsg = null;
+  }
+  ngOnDestroy() {
+    if (this.closeSub) {
+      this.closeSub.unsubscribe();
+    }
+  }
+
 }
